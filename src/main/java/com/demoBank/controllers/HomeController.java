@@ -1,13 +1,8 @@
 package com.demoBank.controllers;
 
-import com.demoBank.entities.User;
-import com.demoBank.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.text.DateFormat;
@@ -38,6 +33,12 @@ public class HomeController {
 
         return "home";
     }
+
+    @GetMapping("/service")
+    public String service(){
+        return "service";
+    }
+
 
     @GetMapping("/admin")
     public String admin(){

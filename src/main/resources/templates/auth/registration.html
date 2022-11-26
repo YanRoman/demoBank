@@ -17,7 +17,7 @@
     <div class="col-md-10 mx-auto col-lg-5" bis_skin_checked="1">
 
       <div th:if="${message}">
-        <p th:text="${message}"></p>
+        <p style="color: red" th:text="${message}"></p>
       </div>
 
       <form th:action="@{/registration}" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
@@ -37,8 +37,8 @@
         </div>
 
         <div class="form-floating mb-3" bis_skin_checked="1">
-          <input type="password" class="form-control" id="successPassword" placeholder="successPassword">
-          <label for="successPassword">Подтвердите пароль</label>
+          <input type="password" name="passwordConfirm" class="form-control" id="passwordConfirm" placeholder="passwordConfirm">
+          <label for="passwordConfirm">Подтвердите пароль</label>
         </div>
 
 
