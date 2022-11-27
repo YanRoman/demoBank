@@ -66,20 +66,25 @@ public class UserService implements UserDetailsService {
                 number.append(" ");
             }
         }
+        while (cardRepository.findByNumber(number.toString()) != null){
+            for (int i = 0; i < 4; i++){
+                number.append(Integer.toString(((int) (Math.random() * 8999)) + 1000));
+                if (i<3){
+                    number.append(" ");
+                }
+            }
+        }
         card.setNumber(number.toString());
 
 
-        int cvv = (int) (Math.random() * 1000);
+        int cvv = ( (int) (Math.random() * 900) ) + 100;
         while (cardRepository.findByCvv(cvv) != null){
-            cvv = (int) (Math.random() * 1000);
+            cvv = ( (int) (Math.random() * 900) ) + 100;
         }
         card.setCvv(cvv);
-
         card.setBalance(60000);
-
         user.setCard(card);
         cardRepository.save(card);
-
         return true;
     }
     public void deleteCard(Principal principal){

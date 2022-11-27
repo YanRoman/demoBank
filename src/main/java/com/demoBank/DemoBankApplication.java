@@ -67,6 +67,7 @@ public class DemoBankApplication implements CommandLineRunner {
 
 		List<User> users = Arrays.asList(admin ,testUser1, testUser2);
 
-		userRepository.saveAll(users);
+		//	FOR TESTS
+		//userRepository.saveAll(users);
 	}
 }
