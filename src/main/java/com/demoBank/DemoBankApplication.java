@@ -20,42 +20,53 @@ import java.util.List;
 public class DemoBankApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {SpringApplication.run(DemoBankApplication.class, args);}
-
-
-	@Autowired
 	UserRepository userRepository;
-	@Autowired
 	CardRepository cardRepository;
+
+	@Autowired
+	public void setUserRepository(UserRepository userRepository){
+		this.userRepository = userRepository;
+	}
+	@Autowired
+	public void setCardRepository(CardRepository cardRepository){
+		this.cardRepository = cardRepository;
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
 
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-		User user1 = new User();
-		user1.setUsername("username1");
-		user1.setPassword(bCryptPasswordEncoder.encode("100"));
-		user1.setEmail("mail1@mail.ru");
-		user1.setRoles(Collections.singleton(Role.USER));
+		User admin = new User();
+		admin.setUsername("admin");
+		admin.setPassword(bCryptPasswordEncoder.encode("100"));
+		admin.setEmail("admin@mail.ru");
+		admin.setRoles(Collections.singleton(Role.ADMIN));
 
-		User user2 = new User();
-		user2.setUsername("username2");
-		user2.setPassword(bCryptPasswordEncoder.encode("100"));
-		user2.setEmail("mail2@mail.ru");
-		user2.setRoles(Collections.singleton(Role.USER));
+
+		User testUser1 = new User();
+		testUser1.setUsername("username1");
+		testUser1.setPassword(bCryptPasswordEncoder.encode("100"));
+		testUser1.setEmail("mail1@mail.ru");
+		testUser1.setRoles(Collections.singleton(Role.USER));
+
+		User testUser2 = new User();
+		testUser2.setUsername("username2");
+		testUser2.setPassword(bCryptPasswordEncoder.encode("100"));
+		testUser2.setEmail("mail2@mail.ru");
+		testUser2.setRoles(Collections.singleton(Role.USER));
 
 		Card card1 = new Card();
 		card1.setNumber("111111");
 		Card card2 = new Card();
 		card2.setNumber("222222");
 
-		user1.setCard(card1);
-		user2.setCard(card2);
+		testUser1.setCard(card1);
+		testUser2.setCard(card2);
 
-		List<User> users = Arrays.asList(user1, user2);
+
+		List<User> users = Arrays.asList(admin ,testUser1, testUser2);
 
 		userRepository.saveAll(users);
-
-		//System.out.println("<<<<<<<<<<<<<<<<<" + userRepository.findAll());
 	}
 }
