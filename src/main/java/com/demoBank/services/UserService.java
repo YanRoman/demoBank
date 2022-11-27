@@ -4,19 +4,14 @@ import com.demoBank.entities.Role;
 import com.demoBank.entities.User;
 import com.demoBank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.List;
+
 
 @Service
 public class UserService implements UserDetailsService {
@@ -28,11 +23,15 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
     public User findByEmail(String email){return userRepository.findByEmail(email);}
 
+    public List<User> allUsers(){
+        return userRepository.findAll();
+    }
     public boolean saveUser(User user){
 
         if(userRepository.findByUsername(user.getUsername()) != null){
@@ -44,6 +43,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return true;
     }
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -55,4 +59,6 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
+
+
 }
