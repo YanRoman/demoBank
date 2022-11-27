@@ -7,7 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
@@ -20,11 +21,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 2, max = 30)
+    @NotBlank(message = "Логин не может быть пустым")
+    @Size(min = 3, message = "Логин не может быть короче 3 символов")
+    @Size(max = 30, message = "Логин не может быть длинее 30 символов")
     private String username;
 
-    @NotBlank(message = "Это поле не должно быть пустым")
+    @NotBlank(message = "Пароль не может быть пустым")
     private String password;
 
     @Transient
