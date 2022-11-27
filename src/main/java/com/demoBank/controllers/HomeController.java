@@ -1,5 +1,8 @@
 package com.demoBank.controllers;
 
+import com.demoBank.entities.Card;
+import com.demoBank.entities.User;
+import com.demoBank.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +11,15 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class HomeController {
+    private final UserService userService;
+
+    public HomeController(UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String home(Principal principal, Model model){
@@ -30,6 +39,9 @@ public class HomeController {
         } else {
             model.addAttribute("time", "Добрый вечер");
         }
+
+        List<Card> cards = userService.findByUsername(principal.getName()).getCards();
+        model.addAttribute("cards", cards);
 
         return "home";
     }

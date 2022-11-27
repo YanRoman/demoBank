@@ -1,7 +1,9 @@
 package com.demoBank.services;
 
+import com.demoBank.entities.Card;
 import com.demoBank.entities.Role;
 import com.demoBank.entities.User;
+import com.demoBank.repositories.CardRepository;
 import com.demoBank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,18 +11,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final CardRepository cardRepository;
     private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CardRepository cardRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.cardRepository = cardRepository;
     }
 
 
@@ -47,6 +54,27 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
+    public void addCard(Principal principal, Card card){
+        card.setDate(new Date());
+
+        int number = (int) (Math.random() * 500000);
+        while (cardRepository.findByNumber(number) != null ){
+            number = (int) (Math.random() * 500000);
+        }
+        card.setNumber(number);
+
+        int cvv = (int) (Math.random() * 1000);
+        while (cardRepository.findByCvv(cvv) != null){
+            cvv = (int) (Math.random() * 1000);
+        }
+        card.setCvv(cvv);
+
+        User user = findByUsername(principal.getName());
+        List<Card> cards = user.getCards();
+        cards.add(card);
+        user.setCards(cards);
+        cardRepository.save(card);
+    }
 
 
     @Override
