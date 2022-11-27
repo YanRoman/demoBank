@@ -30,21 +30,17 @@ public class UserService implements UserDetailsService {
         this.cardRepository = cardRepository;
     }
 
-
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
     public User findByEmail(String email){return userRepository.findByEmail(email);}
-
     public List<User> allUsers(){
         return userRepository.findAll();
     }
     public boolean saveUser(User user){
-
         if(userRepository.findByUsername(user.getUsername()) != null){
            return false;
         }
-
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);

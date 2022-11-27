@@ -31,9 +31,19 @@ public class RelationsTests {
         card.getUser().setCard(null);
         cardRepository.delete(card);
         List<User> users = userRepository.findAll();
-        assertThat(users).hasSize(2);
+        assertThat(users).hasSize(3);
 
         List<Card> cards = cardRepository.findAll();
         assertThat(cards).hasSize(1);
+    }
+    @Test void deleteUser() throws Exception{
+        User user = userRepository.findByUsername("username2");
+        userRepository.delete(user);
+
+        List<User> users = userRepository.findAll();
+        List<Card> cards = cardRepository.findAll();
+
+        assertThat(users).hasSize(2);
+        assertThat(cards).hasSize(0);
     }
 }
