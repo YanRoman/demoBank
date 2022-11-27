@@ -8,32 +8,33 @@
 <body>
 <header th:insert="fragments/header :: header"></header>
 
-
-<div class="row py-lg-5" bis_skin_checked="1">
-    <div class="col-lg-6 col-md-8 mx-auto" bis_skin_checked="1">
-        <h1 th:text="${time}+' '+${name} + '!'" class="fw-light"></h1>
-
-
-        <p>
-            <p class="lead text-muted" th:if="${cards.isEmpty()}">У вас еще нет карты, создайте ее прямо сейчас! </p>
-            <a href="/newCard" class="btn btn-outline-secondary">Создать новую карту</a>
-        </p>
-
+<main>
+    <div class="container py-4" bis_skin_checked="1">
         <div class="p-5 mb-4 bg-light rounded-3" bis_skin_checked="1">
             <div class="container-fluid py-5" bis_skin_checked="1">
-                <h1 class="display-5 fw-bold">Ваши карты</h1>
-                <ul>
-                    <th:block th:each="card:${cards}">
-                        <li th:utext="'Number: ' + ${card.number} + '  Date: ' + ${card.date}"></li>
-                    </th:block>
-                </ul>
+                <h1 th:text="${time}+' '+${name} + '!'" class="display-5 fw-bold"></h1>
+                <p class="col-md-8 fs-4" th:if="${card==null}">У вас еще нет карты, создайте ее прямо сейчас! <a href="/newCard" class="btn btn-outline-secondary">Создать новую карту</a></p>
+                <p class="col-md-8 fs-4" th:if="${card!=null}">У вас есть карта, хотите ее удалить? <a href="/deleteCard" class="btn btn-outline-secondary">Удалить карту</a></p>
             </div>
         </div>
 
-
+        <div th:if="${card!=null}" class="row align-items-md-stretch" bis_skin_checked="1">
+            <div class="col-md-6" bis_skin_checked="1">
+                <div class="h-100 p-5 text-bg-dark rounded-3" bis_skin_checked="1">
+                    <h2>Demo credit bank</h2>
+                    <h2 th:text="${card.number}"></h2>
+                    <p th:text="'Date: ' + ${date} + '       CVV: ' + ${card.cvv}" ></p>
+                    <h2 th:text="'Остаток средств: ' + ${card.balance} + ' RUB'"></h2>
+                </div>
+            </div>
+            <div class="col-md-6" bis_skin_checked="1">
+                <div class="h-100 p-5 bg-light border rounded-3" bis_skin_checked="1">
+                    <button class="btn btn-outline-secondary" type="button">Перести</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 
 

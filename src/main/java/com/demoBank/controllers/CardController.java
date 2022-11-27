@@ -12,19 +12,23 @@ import java.security.Principal;
 
 @Controller
 public class CardController {
-    private final CardRepository cardRepository;
     private final UserService userService;
     @Autowired
-    public CardController(CardRepository cardRepository, UserService userService){
-        this.cardRepository = cardRepository;
+    public CardController(UserService userService){
         this.userService = userService;
     }
 
     @GetMapping("/newCard")
-    public String newCard(Principal principal){
-        Card card = new Card();
-        userService.addCard(principal, card);
+    public String newCard(Principal principal, Model model){
+        if (!userService.addCard(principal)){
+            model.addAttribute("message", "У вас уже есть карта");
+        }
+        return "redirect:/";
+    }
 
+    @GetMapping("/deleteCard")
+    public String deleteCard(Principal principal){
+        userService.deleteCard(principal);
         return "redirect:/";
     }
 }

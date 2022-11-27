@@ -13,9 +13,12 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private int number;
+    private String number;
     private Date date;
+
+
     private int cvv;
 
+    private float balance;
 
 }

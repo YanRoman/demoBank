@@ -54,14 +54,24 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
-    public void addCard(Principal principal, Card card){
+    public boolean addCard(Principal principal){
+        User user = findByUsername(principal.getName());
+        if(user.getCard() != null){
+            return false;
+        }
+        Card card = new Card();
+
         card.setDate(new Date());
 
-        int number = (int) (Math.random() * 500000);
-        while (cardRepository.findByNumber(number) != null ){
-            number = (int) (Math.random() * 500000);
+        StringBuilder number = new StringBuilder(new String());
+        for (int i = 0; i < 4; i++){
+            number.append(Integer.toString(((int) (Math.random() * 8999)) + 1000));
+            if (i<3){
+                number.append(" ");
+            }
         }
-        card.setNumber(number);
+        card.setNumber(number.toString());
+
 
         int cvv = (int) (Math.random() * 1000);
         while (cardRepository.findByCvv(cvv) != null){
@@ -69,13 +79,20 @@ public class UserService implements UserDetailsService {
         }
         card.setCvv(cvv);
 
-        User user = findByUsername(principal.getName());
-        List<Card> cards = user.getCards();
-        cards.add(card);
-        user.setCards(cards);
-        cardRepository.save(card);
-    }
+        card.setBalance(60000);
 
+        user.setCard(card);
+        cardRepository.save(card);
+
+        return true;
+    }
+    public void deleteCard(Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        System.out.println(user.getCard().getId());
+
+        cardRepository.deleteById(user.getCard().getId());
+
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

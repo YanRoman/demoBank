@@ -40,8 +40,11 @@ public class HomeController {
             model.addAttribute("time", "Добрый вечер");
         }
 
-        List<Card> cards = userService.findByUsername(principal.getName()).getCards();
-        model.addAttribute("cards", cards);
+        Card card = userService.findByUsername(principal.getName()).getCard();
+        model.addAttribute("card", card);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yy");
+        model.addAttribute("date", simpleDateFormat.format(card.getDate()));
 
         return "home";
     }

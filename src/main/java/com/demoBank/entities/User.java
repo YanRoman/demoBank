@@ -42,9 +42,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Card> cards;
+    private Card card;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
