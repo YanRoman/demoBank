@@ -13,12 +13,15 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Column(unique = true, nullable = false)
     private String number;
     private Date date;
-
-
     private int cvv;
-
     private float balance;
+
+    @OneToOne(mappedBy = "card", cascade =
+            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+            })
+    private User user;
 
 }

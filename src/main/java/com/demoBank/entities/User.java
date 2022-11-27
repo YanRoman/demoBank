@@ -43,8 +43,9 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "card_id")
     private Card card;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

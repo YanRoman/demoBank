@@ -43,9 +43,11 @@ public class HomeController {
         Card card = userService.findByUsername(principal.getName()).getCard();
         model.addAttribute("card", card);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yy");
-        model.addAttribute("date", simpleDateFormat.format(card.getDate()));
+        if (card != null){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yy");
+            model.addAttribute("date", simpleDateFormat.format(card.getDate()));
 
+        }
         return "home";
     }
 
