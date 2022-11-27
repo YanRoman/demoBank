@@ -84,10 +84,10 @@ public class UserService implements UserDetailsService {
     }
     public void deleteCard(Principal principal){
         User user = userRepository.findByUsername(principal.getName());
-        System.out.println(user.getCard().getId());
+        Card card = user.getCard();
+        user.setCard(null);
 
-        cardRepository.deleteById(user.getCard().getId());
-
+        cardRepository.delete(card);
     }
 
     @Override

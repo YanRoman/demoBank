@@ -1,7 +1,5 @@
 package com.demoBank.controllers;
 
-import com.demoBank.entities.Card;
-import com.demoBank.repositories.CardRepository;
 import com.demoBank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
