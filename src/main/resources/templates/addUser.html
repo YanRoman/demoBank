@@ -6,31 +6,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-    <span class="fs-4">Demo bank</span>
-  </a>
-
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
-    <li class="nav-item"><a href="/service" class="nav-link">Услуги</a></li>
-  </ul>
-</header>
-
 <div class="container col-xl-10 col-xxl-8 px-4 py-5" bis_skin_checked="1">
   <div class="row align-items-center g-lg-5 py-5" bis_skin_checked="1">
-    <div class="col-lg-7 text-center text-lg-start" bis_skin_checked="1">
-      <h1 class="display-4 fw-bold lh-1 mb-3">Зарегестрируйтесь чтобы пользоваться услугами банка</h1>
-      <p class="col-lg-10 fs-4">Выдаем кредиты</p>
-    </div>
     <div class="col-md-10 mx-auto col-lg-5" bis_skin_checked="1">
-
       <div th:if="${message}">
         <p style="color: red" th:text="${message}"></p>
       </div>
 
-      <form th:action="@{/registration}" th:object="${user}" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+      <form th:action="@{/admin/addUser}" th:object="${user}" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
         <div style="color: red" th:if="${#fields.hasErrors}" th:each="error:${#fields.errors}">
           <p th:utext="${error}"></p>
         </div>
@@ -55,17 +38,12 @@
           <label for="passwordConfirm">Подтвердите пароль</label>
         </div>
 
-
-
-        <button type="submit" class="w-100 btn btn-lg btn-primary">Регестрация</button>
+        <button type="submit" class="w-100 btn btn-lg btn-primary">Добавить</button>
         <hr class="my-4">
-        <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-
       </form>
     </div>
   </div>
 </div>
-
 <footer th:insert="fragments/footer :: footer"></footer>
 </body>
 </html>

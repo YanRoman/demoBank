@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
+@RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
     @Autowired
@@ -20,16 +22,46 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping()
     public String userList(Model model) {
         model.addAttribute("users", userService.allUsers());
         return "admin";
     }
+    @GetMapping("/addUser")
+    public String addUser(Model model){
+        model.addAttribute("user", new User());
+        return "addUser";
+    }
+    @PostMapping("/addUser")
+    public String addUser(@Valid User user, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("user", user);
+            return "addUser";
+        }
+        if (user.getPassword() != null && !Objects.equals(user.getPassword(), user.getPasswordConfirm())){
+            model.addAttribute("message", "Пароли не совпадают");
+            return "addUser";
+        }
+        if (userService.findByEmail(user.getEmail()) != null){
+            model.addAttribute("message", "Пользователь с таким email уже существует");
+            return "addUser";
+        }
+        if (!userService.saveUser(user)){
+            model.addAttribute("message", "Пользователь с таким именем уже существует");
+            return "addUser";
+        }
+        return "redirect:/admin";
+    }
+
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, Model model) {
-
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
+
+/*    @GetMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") Long id){
+
+    }*/
 }
