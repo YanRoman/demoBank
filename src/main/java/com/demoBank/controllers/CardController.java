@@ -3,7 +3,6 @@ package com.demoBank.controllers;
 import com.demoBank.entities.Card;
 import com.demoBank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
