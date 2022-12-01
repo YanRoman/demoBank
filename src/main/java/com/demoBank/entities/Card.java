@@ -17,7 +17,7 @@ public class Card {
     private String number;
     private Date date;
     private int cvv;
-    private float balance;
+    private double balance;
 
     @OneToOne(mappedBy = "card", cascade =
             {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH

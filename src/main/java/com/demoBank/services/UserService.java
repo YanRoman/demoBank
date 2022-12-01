@@ -95,6 +95,17 @@ public class UserService implements UserDetailsService {
         cardRepository.delete(card);
     }
 
+    public boolean send(double sum, String number, Principal principal){
+        Card recipientCard = cardRepository.findByNumber(number);
+
+        if (recipientCard == null){
+            return false;
+        }
+
+        double newBalance = recipientCard.getBalance() + sum;
+        recipientCard.setBalance(newBalance);
+        return true;
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
