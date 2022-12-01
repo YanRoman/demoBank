@@ -22,12 +22,12 @@ public class HomeController {
     public String home(Principal principal, Model model) throws Exception {
         model.addAttribute("name", principal.getName());
         model.addAttribute("time", getTime());
-        try {
+
+        if (userService.findByUsername(principal.getName()).getCard() != null){
             model.addAttribute("card", getUserCard(principal));
             model.addAttribute("date", getCardDate(principal));
-        } catch (NullPointerException e){
-            throw new NullPointerException("Карты нет");
         }
+
         return "home";
     }
 
@@ -35,7 +35,6 @@ public class HomeController {
     public String service(){
         return "service";
     }
-
 
     private String getTime() throws Exception {
         Date date = new Date();

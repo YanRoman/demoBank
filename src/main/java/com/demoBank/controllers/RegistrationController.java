@@ -49,7 +49,6 @@ public class RegistrationController{
             return "auth/registration";
         }
 
-
         if (userService.findByEmail(user.getEmail()) != null){
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "auth/registration";
