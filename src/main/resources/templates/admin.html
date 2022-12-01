@@ -27,15 +27,18 @@
         <th scope="col"></th>
       </tr>
       </thead>
-      <tbody th:each="user:${allUsers}">
-      <tr>
-        <th scope="row" th:utext="${user.id}">Default</th>
-        <th scope="row" th:utext="${user.username}">Default</th>
-        <td th:utext="${user.email}"></td>
-        <td th:utext="${user.password}"></td>
-        <td><a class="btn btn-danger">Update</a> <a class="btn btn-danger">Delete</a></td>
-      </tr>
-      </tbody>
+        <tbody th:each="user:${users}">
+          <tr>
+            <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
+            <th scope="row" th:utext="${user.username}">Default</th>
+            <td th:utext="${user.email}"></td>
+            <td th:utext="${user.password}"></td>
+            <td>
+              <a class="btn btn-danger" th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+              <a class="btn btn-danger" th:href="@{/update/{id}(id=${user.id})}">Update</a>
+            </td>
+          </tr>
+        </tbody>
     </table>
   </div></div>
 </div>

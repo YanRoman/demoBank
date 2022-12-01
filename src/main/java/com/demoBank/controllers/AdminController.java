@@ -1,12 +1,15 @@
 package com.demoBank.controllers;
 
+import com.demoBank.entities.User;
 import com.demoBank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -19,14 +22,14 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String userList(Model model) {
-        model.addAttribute("allUsers", userService.allUsers());
+        model.addAttribute("users", userService.allUsers());
         return "admin";
     }
 
-    @PostMapping("/delete")
-    public String deleteUser(Long userId, Model model) {
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id, Model model) {
 
-        userService.deleteUser(userId);
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 }
