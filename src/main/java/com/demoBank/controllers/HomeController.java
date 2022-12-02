@@ -64,8 +64,8 @@ public class HomeController {
     }
 
 
-    @GetMapping("/changeAccount")
+    @GetMapping("/settings")
     public String change(){
-        return "change";
+        return "settings";
     }
 }
