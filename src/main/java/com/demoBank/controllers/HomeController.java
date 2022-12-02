@@ -62,4 +62,10 @@ public class HomeController {
         return simpleDateFormat.format(userService.findByUsername(principal.getName()).getCard().getDate());
 
     }
+
+
+    @GetMapping("/changeAccount")
+    public String change(){
+        return "change";
+    }
 }
