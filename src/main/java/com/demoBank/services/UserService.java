@@ -61,6 +61,11 @@ public class UserService implements UserDetailsService {
         user.setEmail(email);
         userRepository.save(user);
     }
+    public void setPassword(String password, Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
     public boolean addCard(Principal principal){
         User user = findByUsername(principal.getName());
         if(user.getCard() != null){

@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 public class SettingsController {
@@ -31,6 +32,12 @@ public class SettingsController {
         return "settings";
     }
 
+    private void logout(HttpServletRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null){
+            request.getSession().invalidate();
+        }
+    }
     @PostMapping("/changeUsername")
     public String changeUsername(@ModelAttribute("username") String username,
                                  HttpServletRequest request,
@@ -49,10 +56,19 @@ public class SettingsController {
         return "redirect:/login";
     }
 
-    private void logout(HttpServletRequest request){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null){
-            request.getSession().invalidate();
+    @PostMapping("/changePassword")
+    public String changePassword(@ModelAttribute("password") String password,
+                                 @ModelAttribute("passwordConfirm") String passwordConfirm,
+                                 HttpServletRequest request,
+                                 Principal principal,
+                                 Model model){
+        if (!Objects.equals(password, passwordConfirm)){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пароли не совпадают");
+            return "settings";
         }
+        userService.setPassword(password, principal);
+        logout(request);
+        return "redirect:/login";
     }
 }
