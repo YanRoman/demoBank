@@ -52,12 +52,11 @@ public class RegistrationController{
         }
 
 
-        if (userService.findByUsername(user.getUsername()) != null){
+        if (!userService.saveUser(user)){
             model.addAttribute("message", "Пользователь с таким именем уже существует");
             return "auth/registration";
         }
 
-        userService.saveUser(user);
         return "redirect:/login";
     }
 }

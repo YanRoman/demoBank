@@ -37,10 +37,14 @@ public class UserService implements UserDetailsService {
     public List<User> allUsers(){
         return userRepository.findAll();
     }
-    public void saveUser(User user){
+    public boolean saveUser(User user){
+        if (userRepository.findByUsername(user.getUsername()) != null){
+            return false;
+        }
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return true;
     }
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
