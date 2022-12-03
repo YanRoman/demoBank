@@ -3,10 +3,15 @@
 ## Project overview
 
 + Home page
-![image](https://user-images.githubusercontent.com/91944488/205457607-b15ebdda-bce5-4413-a44f-078aa9859c01.png)
+![image](https://user-images.githubusercontent.com/91944488/205462626-b1566a67-f708-4de4-bc28-10fd4b241aa0.png)
+
 
 + Registration page
 ![image](https://user-images.githubusercontent.com/91944488/205457941-2b0224b8-7320-44e0-a8b8-6d9b346b6c5c.png)
+
+
++ Admin page
+![image](https://user-images.githubusercontent.com/91944488/205461742-e69a83cb-734e-4feb-b398-39715c35ebac.png)
 
 
 + Database
