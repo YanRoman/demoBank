@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.security.Principal;
 import java.util.Objects;
 
@@ -41,7 +42,7 @@ public class SettingsController {
         }
     }
     @PostMapping("/changeUsername")
-    public String changeUsername(@ModelAttribute("username") String username, Model model,
+    public String changeUsername(String username, Model model,
                                  HttpServletRequest request,
                                  Principal principal){
         if (userService.findByUsername(username) != null){
@@ -60,7 +61,7 @@ public class SettingsController {
     }
 
     @PostMapping("/changeEmail")
-    public String changeEmail(@ModelAttribute("email") String email,
+    public String changeEmail(String email,
                               HttpServletRequest request,
                               Principal principal){
         userService.setEmail(email, principal);
@@ -69,8 +70,8 @@ public class SettingsController {
     }
 
     @PostMapping("/changePassword")
-    public String changePassword(@ModelAttribute("password") String password,
-                                 @ModelAttribute("passwordConfirm") String passwordConfirm,
+    public String changePassword(String password,
+                                 String passwordConfirm,
                                  HttpServletRequest request,
                                  Principal principal,
                                  Model model){
