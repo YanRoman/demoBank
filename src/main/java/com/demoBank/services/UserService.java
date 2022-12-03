@@ -51,10 +51,14 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
-    // TODO setUsername fix
     public void setUsername(String username, Principal principal){
         User user = userRepository.findByUsername(principal.getName());
         user.setUsername(username);
+        userRepository.save(user);
+    }
+    public void setEmail(String email, Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        user.setEmail(email);
         userRepository.save(user);
     }
     public boolean addCard(Principal principal){

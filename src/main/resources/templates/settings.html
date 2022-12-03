@@ -10,15 +10,15 @@
 <div class="container">
     <form th:action="@{/changeUsername}" method="post" class="row mb-3 text-left" bis_skin_checked="1">
       <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте имя пользователя</h4></div>
-      <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><input type="text" name="username" class="form-control"></div>
+      <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><input type="text" name="username" th:placeholder="${user.username}" class="form-control"></div>
       <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><button type="submit" class="btn btn-secondary">Поменять</button></div>
     </form>
 
-  <div class="row mb-3 text-left" bis_skin_checked="1">
+  <form th:action="@{/changeEmail}" method="post" class="row mb-3 text-left" bis_skin_checked="1">
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте почту</h4></div>
-    <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><input type="text" class="form-control"></div>
+    <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><input type="text" name="email" th:placeholder="${user.email}" class="form-control"></div>
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><button type="submit" class="btn btn-secondary">Поменять</button></div>
-  </div>
+  </form>
 
   <div class="row mb-3 text-left" bis_skin_checked="1">
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте пароль</h4></div>

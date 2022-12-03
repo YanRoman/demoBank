@@ -26,7 +26,8 @@ public class SettingsController {
     }
 
     @GetMapping("/settings")
-    public String change(){
+    public String change(Model model, Principal principal){
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "settings";
     }
 
@@ -34,13 +35,24 @@ public class SettingsController {
     public String changeUsername(@ModelAttribute("username") String username,
                                  HttpServletRequest request,
                                  Principal principal){
-        System.out.println(username);
         userService.setUsername(username, principal);
+        logout(request);
+        return "redirect:/login";
+    }
 
+    @PostMapping("/changeEmail")
+    public String changeEmail(@ModelAttribute("email") String email,
+                              HttpServletRequest request,
+                              Principal principal){
+        userService.setEmail(email, principal);
+        logout(request);
+        return "redirect:/login";
+    }
+
+    private void logout(HttpServletRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null){
             request.getSession().invalidate();
         }
-        return "redirect:/login";
     }
 }
