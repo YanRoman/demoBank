@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -46,12 +47,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return true;
     }
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
-
-    public void update(User user){
-        userRepository.save(user);
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
     }
 
     public void setUsername(String username, Principal principal){

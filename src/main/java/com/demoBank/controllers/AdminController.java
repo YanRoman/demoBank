@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -56,12 +57,20 @@ public class AdminController {
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
+        userService.deleteById(id);
         return "redirect:/admin";
     }
 
-/*    @GetMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") Long id){
+    @GetMapping("/update/{id}")
+    public String updateUser(@PathVariable Long id, Model model){
+        model.addAttribute("user", userService.findById(id).get());
+        return "adminUpdate";
+    }
 
-    }*/
+    @PostMapping("/changeUsername/{id}")
+    public String changeUsername(@PathVariable Long id, String username, Model model){
+        System.out.printf("id");
+
+        return "redirect:/admin";
+    }
 }
