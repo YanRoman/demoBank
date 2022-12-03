@@ -16,7 +16,6 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -38,17 +37,17 @@ public class UserService implements UserDetailsService {
     public List<User> allUsers(){
         return userRepository.findAll();
     }
-    public boolean saveUser(User user){
-        if(userRepository.findByUsername(user.getUsername()) != null){
-           return false;
-        }
+    public void saveUser(User user){
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
     }
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public void update(User user){
+        userRepository.save(user);
     }
 
     public void setUsername(String username, Principal principal){

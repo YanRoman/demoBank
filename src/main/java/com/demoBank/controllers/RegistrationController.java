@@ -36,9 +36,6 @@ public class RegistrationController{
 
     @PostMapping("/registration")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model){
-        System.out.println(model.asMap());
-        System.out.println(bindingResult.hasErrors());
-
         if(bindingResult.hasErrors()){
             model.addAttribute("user", user);
             return "auth/registration";
@@ -54,11 +51,13 @@ public class RegistrationController{
             return "auth/registration";
         }
 
-        if (!userService.saveUser(user)){
+
+        if (userService.findByUsername(user.getUsername()) != null){
             model.addAttribute("message", "Пользователь с таким именем уже существует");
             return "auth/registration";
         }
 
+        userService.saveUser(user);
         return "redirect:/login";
     }
 }

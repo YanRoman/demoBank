@@ -8,19 +8,21 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Objects;
 
 @Controller
 public class SettingsController {
 
-    private UserService userService;
+    private final UserService userService;
     @Autowired
     public SettingsController(UserService userService){
         this.userService = userService;
@@ -39,9 +41,19 @@ public class SettingsController {
         }
     }
     @PostMapping("/changeUsername")
-    public String changeUsername(@ModelAttribute("username") String username,
+    public String changeUsername(@ModelAttribute("username") String username, Model model,
                                  HttpServletRequest request,
                                  Principal principal){
+        if (userService.findByUsername(username) != null){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Такой пользователь уже существует");
+            return "settings";
+        }
+        if (username.length() < 3){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Имя должно быть не короче 3 символов");
+            return "settings";
+        }
         userService.setUsername(username, principal);
         logout(request);
         return "redirect:/login";

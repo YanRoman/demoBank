@@ -46,10 +46,11 @@ public class AdminController {
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "addUser";
         }
-        if (!userService.saveUser(user)){
+        if (userService.findByUsername(user.getUsername()) != null){
             model.addAttribute("message", "Пользователь с таким именем уже существует");
-            return "addUser";
+            return "auth/registration";
         }
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 

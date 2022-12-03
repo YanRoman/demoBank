@@ -24,6 +24,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Логин не может быть пустым")
     @Size(min = 3, message = "Логин не может быть короче 3 символов")
     @Size(max = 30, message = "Логин не может быть длинее 30 символов")
+    @Column(unique = true, nullable = false)
     private String username;
 
     @NotBlank(message = "Пароль не может быть пустым")
