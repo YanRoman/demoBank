@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Главная</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
@@ -12,38 +12,28 @@
     <div class="container py-4" bis_skin_checked="1">
         <div class="p-5 mb-4 bg-light rounded-3" bis_skin_checked="1">
             <div class="container-fluid py-5" bis_skin_checked="1">
-                <h1 th:text="${time}+' '+${name} + '!'" class="display-5 fw-bold"></h1>
+                <h1 th:text="${time}+', '+${name} + '!'" class="display-5 fw-bold"></h1>
                 <p class="col-md-8 fs-4" th:if="${card==null}">У вас еще нет карты, создайте ее прямо сейчас! <a href="/newCard" class="btn btn-outline-secondary">Создать новую карту</a></p>
                 <p class="col-md-8 fs-4" th:if="${card!=null}">У вас есть карта, хотите ее удалить? <a href="/deleteCard" class="btn btn-outline-secondary">Удалить карту</a></p>
             </div>
         </div>
 
         <div th:if="${card!=null}" class="row align-items-md-stretch" bis_skin_checked="1">
+
+
+
             <div class="col-md-6" bis_skin_checked="1">
                 <div class="h-100 p-5 text-bg-dark rounded-3" bis_skin_checked="1">
-                    <h2>Demo credit bank</h2>
+                    <h2>Кредит банк</h2>
                     <h2 th:text="${card.number}"></h2>
-                    <p th:text="'Date: ' + ${date} + '       CVV: ' + ${card.cvv}" ></p>
-                    <h2 th:text="'Остаток средств: ' + ${card.balance} + ' RUB'"></h2>
+                    <p th:text="'CVV: ' + ${card.cvv}"></p>
+                    <p th:text="'До ' + ${date}"></p>
+                    <h2 th:text="${card.balance} + ' RUB'"></h2>
                 </div>
             </div>
             <div class="col-md-6" bis_skin_checked="1">
-                <div class="h-100 p-5 bg-light border rounded-3" bis_skin_checked="1">
-
-
-                    <form th:action="@{/send}" method="post">
-                        <div th:if="${sendMessage}">
-                            <p style="color: red" th:text="${sendMessage}"></p>
-                        </div>
-                        <label for="number">Номер карты</label>
-                        <input type="text" th:object="${number}" id="number" placeholder="1111 1111 1111 1111" class="form-control">
-
-                        <label for="sum">Сумма перевода</label>
-                        <input type="text" th:object="${sum}" id="sum" placeholder="60000" class="form-control">
-
-                        <button class="btn btn-outline-secondary" type="submit">Перевсти</button>
+                    <form th:action="@{/send}" method="post" class="h-100 p-5 bg-light border rounded-3" bis_skin_checked="1">
                     </form>
-                </div>
             </div>
         </div>
     </div>
