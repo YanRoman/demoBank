@@ -45,14 +45,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    public boolean hasCard(){
-        if (card == null){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
