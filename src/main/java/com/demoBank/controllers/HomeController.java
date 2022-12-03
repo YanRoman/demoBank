@@ -30,7 +30,14 @@ public class HomeController {
 
         return "home";
     }
+    private Card getUserCard(Principal principal){
+        return userService.findByUsername(principal.getName()).getCard();
+    }
+    private String getCardDate(Principal principal){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yy");
+        return simpleDateFormat.format(userService.findByUsername(principal.getName()).getCard().getDate());
 
+    }
     @GetMapping("/service")
     public String service(){
         return "service";
@@ -54,13 +61,6 @@ public class HomeController {
             throw new Exception("Неверное системное время");
         }
     }
-    private Card getUserCard(Principal principal){
-        return userService.findByUsername(principal.getName()).getCard();
-    }
-    private String getCardDate(Principal principal){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-yy");
-        return simpleDateFormat.format(userService.findByUsername(principal.getName()).getCard().getDate());
 
-    }
 
 }

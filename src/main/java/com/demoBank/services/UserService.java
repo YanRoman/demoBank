@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -54,6 +55,7 @@ public class UserService implements UserDetailsService {
     public void setUsername(String username, Principal principal){
         User user = userRepository.findByUsername(principal.getName());
         user.setUsername(username);
+        userRepository.save(user);
     }
     public boolean addCard(Principal principal){
         User user = findByUsername(principal.getName());
