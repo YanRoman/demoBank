@@ -35,6 +35,12 @@
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><button type="submit" class="btn btn-secondary">Поменять</button></div>
   </form>
 
+  <form th:action="@{/changeTelephone}" method="post" class="row mb-3 text-left" bis_skin_checked="1">
+    <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте телефон</h4></div>
+    <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><input type="text" name="telephone" th:placeholder="${user.telephone}" class="form-control"></div>
+    <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><button type="submit" class="btn btn-secondary">Поменять</button></div>
+  </form>
+
   <form th:action="@{/changePassword}" method="post" class="row mb-3 text-left" bis_skin_checked="1">
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте пароль</h4></div>
     <div class="col-md-2 themed-grid-col" bis_skin_checked="1"><input name="password" placeholder="password" type="password" class="form-control"></div>

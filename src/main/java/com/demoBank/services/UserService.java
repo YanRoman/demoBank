@@ -35,6 +35,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
     public User findByEmail(String email){return userRepository.findByEmail(email);}
+    public User findByTelephone(String telephone){return userRepository.findByTelephone(telephone);}
     public List<User> allUsers(){
         return userRepository.findAll();
     }
@@ -43,6 +44,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setRoles(Collections.singleton(Role.USER));
+        user.setIndebtedness(0);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
@@ -62,6 +64,11 @@ public class UserService implements UserDetailsService {
     public void setEmail(String email, Principal principal){
         User user = userRepository.findByUsername(principal.getName());
         user.setEmail(email);
+        userRepository.save(user);
+    }
+    public void setTelephone(String telephone, Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        user.setEmail(telephone);
         userRepository.save(user);
     }
     public void setPassword(String password, Principal principal){

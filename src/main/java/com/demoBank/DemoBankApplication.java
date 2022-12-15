@@ -41,6 +41,8 @@ public class DemoBankApplication implements CommandLineRunner {
 		admin.setUsername("admin");
 		admin.setPassword(bCryptPasswordEncoder.encode("100"));
 		admin.setEmail("admin@mail.ru");
+		admin.setTelephone("00000000000");
+		admin.setIndebtedness(0);
 		admin.setRoles(Collections.singleton(Role.ADMIN));
 
 
@@ -48,12 +50,16 @@ public class DemoBankApplication implements CommandLineRunner {
 		testUser1.setUsername("username1");
 		testUser1.setPassword(bCryptPasswordEncoder.encode("100"));
 		testUser1.setEmail("mail1@mail.ru");
+		testUser1.setTelephone("11111111111");
+		testUser1.setIndebtedness(0);
 		testUser1.setRoles(Collections.singleton(Role.USER));
 
 		User testUser2 = new User();
 		testUser2.setUsername("username2");
 		testUser2.setPassword(bCryptPasswordEncoder.encode("100"));
 		testUser2.setEmail("mail2@mail.ru");
+		testUser2.setTelephone("22222222222");
+		testUser2.setIndebtedness(0);
 		testUser2.setRoles(Collections.singleton(Role.USER));
 
 		Card card1 = new Card();

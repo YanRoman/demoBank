@@ -7,11 +7,8 @@
 </head>
 <body>
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+  <a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg class="bi me-2" width="40" height="32"><use xlink:href="icon.png"></use></svg>
-
-
-    <img class="bi me-2" src="icon.png" height="40" width="32"/>
     <span class="fs-4">Администрирование</span>
   </a>
 
@@ -29,7 +26,9 @@
         <th scope="col">Номер</th>
         <th scope="col">Имя пользователя</th>
         <th scope="col">Почта</th>
+        <th scope="col">Телефон</th>
         <th scope="col">Пароль</th>
+        <th scope="col">Задолжность</th>
         <th scope="col"></th>
       </tr>
       </thead>
@@ -38,7 +37,9 @@
             <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
             <th scope="row" th:utext="${user.username}">Default</th>
             <td th:utext="${user.email}"></td>
+            <td th:utext="${user.telephone}"></td>
             <td th:utext="${user.password}"></td>
+            <td th:utext="${user.indebtedness}"></td>
             <td>
               <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Удалить</a>
               <a class="btn btn-danger" th:href="@{/admin/update/{id}(id=${user.id})}">Изменить</a>

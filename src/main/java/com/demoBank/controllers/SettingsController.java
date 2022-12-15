@@ -63,8 +63,31 @@ public class SettingsController {
     @PostMapping("/changeEmail")
     public String changeEmail(String email,
                               HttpServletRequest request,
-                              Principal principal){
+                              Principal principal, Model model){
+        if (userService.findByEmail(email) != null){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пользователь с таким email уже существует");
+            return "settings";
+        }
         userService.setEmail(email, principal);
+        logout(request);
+        return "redirect:/login";
+    }
+    @PostMapping("/changeTelephone")
+    public String changeTelephone(String telephone,
+                              HttpServletRequest request,
+                              Principal principal, Model model){
+        if (userService.findByTelephone(telephone) != null){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пользователь с таким телефоном уже существует");
+            return "settings";
+        }
+        if (telephone.length() != 11){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Неверный формат телефона");
+            return "settings";
+        }
+        userService.setTelephone(telephone, principal);
         logout(request);
         return "redirect:/login";
     }

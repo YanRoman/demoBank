@@ -28,14 +28,23 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank(message = "Пароль не может быть пустым")
+    @Column(nullable = false)
     private String password;
 
     @Transient
     private String passwordConfirm;
 
+    @Column(nullable = false)
+    private double indebtedness;
+
     @Email(message = "формат email не верный")
     @NotBlank(message = "email не может быть пустым")
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Size(min = 11, max = 11, message = "Неверный формат телефона")
+    @Column(unique = true, nullable = false)
+    private String telephone;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
