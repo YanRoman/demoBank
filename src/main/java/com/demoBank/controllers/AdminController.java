@@ -67,9 +67,10 @@ public class AdminController {
         return "adminUpdate";
     }
 
-    @PostMapping("/changeUsername/{id}")
-    public String changeUsername(@PathVariable Long id, String username, Model model){
-        System.out.printf("id");
+    @PostMapping("/admChangeUsername/{id}")
+    public String admChangeUsername(@PathVariable Long id, String username, Model model){
+        System.out.println(id);
+        System.out.println(username);
 
         return "redirect:/admin";
     }

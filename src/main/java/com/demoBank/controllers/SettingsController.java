@@ -1,22 +1,15 @@
 package com.demoBank.controllers;
 
-import com.demoBank.entities.User;
 import com.demoBank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import java.security.Principal;
 import java.util.Objects;
 
@@ -55,7 +48,7 @@ public class SettingsController {
             model.addAttribute("message", "Имя должно быть не короче 3 символов");
             return "settings";
         }
-        userService.setUsername(username, principal);
+        userService.setUsername(username, userService.findByUsername(principal.getName()).getId());
         logout(request);
         return "redirect:/login";
     }
@@ -69,7 +62,7 @@ public class SettingsController {
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "settings";
         }
-        userService.setEmail(email, principal);
+        userService.setEmail(email, userService.findByUsername(principal.getName()).getId());
         logout(request);
         return "redirect:/login";
     }
@@ -87,7 +80,7 @@ public class SettingsController {
             model.addAttribute("message", "Неверный формат телефона");
             return "settings";
         }
-        userService.setTelephone(telephone, principal);
+        userService.setTelephone(telephone, userService.findByUsername(principal.getName()).getId());
         logout(request);
         return "redirect:/login";
     }
@@ -103,7 +96,7 @@ public class SettingsController {
             model.addAttribute("message", "Пароли не совпадают");
             return "settings";
         }
-        userService.setPassword(password, principal);
+        userService.setPassword(password, userService.findByUsername(principal.getName()).getId());
         logout(request);
         return "redirect:/login";
     }

@@ -56,23 +56,23 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
-    public void setUsername(String username, Principal principal){
-        User user = userRepository.findByUsername(principal.getName());
+    public void setUsername(String username, Long id){
+        User user = userRepository.findById(id).get();
         user.setUsername(username);
         userRepository.save(user);
     }
-    public void setEmail(String email, Principal principal){
-        User user = userRepository.findByUsername(principal.getName());
+    public void setEmail(String email, Long id){
+        User user = userRepository.findById(id).get();
         user.setEmail(email);
         userRepository.save(user);
     }
-    public void setTelephone(String telephone, Principal principal){
-        User user = userRepository.findByUsername(principal.getName());
+    public void setTelephone(String telephone, Long id){
+        User user = userRepository.findById(id).get();
         user.setEmail(telephone);
         userRepository.save(user);
     }
-    public void setPassword(String password, Principal principal){
-        User user = userRepository.findByUsername(principal.getName());
+    public void setPassword(String password, Long id){
+        User user = userRepository.findById(id).get();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
