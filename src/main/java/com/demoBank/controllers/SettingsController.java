@@ -38,17 +38,16 @@ public class SettingsController {
     public String changeUsername(String username, Model model,
                                  HttpServletRequest request,
                                  Principal principal){
-        if (userService.findByUsername(username) != null){
-            model.addAttribute("user", userService.findByUsername(principal.getName()));
-            model.addAttribute("message", "Такой пользователь уже существует");
-            return "settings";
-        }
         if (username.length() < 3){
             model.addAttribute("user", userService.findByUsername(principal.getName()));
             model.addAttribute("message", "Имя должно быть не короче 3 символов");
             return "settings";
         }
-        userService.setUsername(username, userService.findByUsername(principal.getName()).getId());
+        if (!userService.setUsername(username, userService.findByUsername(principal.getName()).getId())){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Такой пользователь уже существует");
+            return "settings";
+        }
         logout(request);
         return "redirect:/login";
     }
@@ -57,12 +56,13 @@ public class SettingsController {
     public String changeEmail(String email,
                               HttpServletRequest request,
                               Principal principal, Model model){
-        if (userService.findByEmail(email) != null){
+
+        if (!userService.setEmail(email, userService.findByUsername(principal.getName()).getId())){
             model.addAttribute("user", userService.findByUsername(principal.getName()));
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "settings";
         }
-        userService.setEmail(email, userService.findByUsername(principal.getName()).getId());
+
         logout(request);
         return "redirect:/login";
     }
@@ -70,17 +70,17 @@ public class SettingsController {
     public String changeTelephone(String telephone,
                               HttpServletRequest request,
                               Principal principal, Model model){
-        if (userService.findByTelephone(telephone) != null){
-            model.addAttribute("user", userService.findByUsername(principal.getName()));
-            model.addAttribute("message", "Пользователь с таким телефоном уже существует");
-            return "settings";
-        }
+
         if (telephone.length() != 11){
             model.addAttribute("user", userService.findByUsername(principal.getName()));
             model.addAttribute("message", "Неверный формат телефона");
             return "settings";
         }
-        userService.setTelephone(telephone, userService.findByUsername(principal.getName()).getId());
+        if (!userService.setTelephone(telephone, userService.findByUsername(principal.getName()).getId())){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пользователь с таким телефоном уже существует");
+            return "settings";
+        }
         logout(request);
         return "redirect:/login";
     }

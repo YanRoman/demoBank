@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -68,10 +69,57 @@ public class AdminController {
     }
 
     @PostMapping("/admChangeUsername/{id}")
-    public String admChangeUsername(@PathVariable Long id, String username, Model model){
-        System.out.println(id);
-        System.out.println(username);
+    public String admChangeUsername(@PathVariable Long id, String username, Model model, Principal principal){
 
+        System.out.println(id);
+        if (username.length() < 3){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Имя должно быть не короче 3 символов");
+            return "adminUpdate";
+        }
+        if (!userService.setUsername(username, id)){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Такой пользователь уже существует");
+            return "adminUpdate";
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admChangeEmail/{id}")
+    public String admChangeEmail(@PathVariable Long id, String email, Model model, Principal principal){
+        if (!userService.setEmail(email, userService.findByUsername(principal.getName()).getId())){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пользователь с таким email уже существует");
+            return "adminUpdate";
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admChangeTelephone/{id}")
+    public String admChangeTelephone(@PathVariable Long id, String telephone, Model model, Principal principal){
+        if (telephone.length() != 11){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Неверный формат телефона");
+            return "adminUpdate";
+        }
+        if (!userService.setTelephone(telephone, userService.findByUsername(principal.getName()).getId())){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пользователь с таким телефоном уже существует");
+            return "adminUpdate";
+        }
+
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admChangePassword/{id}")
+    public String admChangePassword(@PathVariable Long id, String password, String passwordConfirm,
+                                    Model model, Principal principal){
+        if (!Objects.equals(password, passwordConfirm)){
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute("message", "Пароли не совпадают");
+            return "adminUpdate";
+        }
+        userService.setPassword(password, userService.findByUsername(principal.getName()).getId());
         return "redirect:/admin";
     }
 }

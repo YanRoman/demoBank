@@ -56,20 +56,32 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
-    public void setUsername(String username, Long id){
+    public boolean setUsername(String username, Long id){
+        if (findByUsername(username) != null){
+            return false;
+        }
         User user = userRepository.findById(id).get();
         user.setUsername(username);
         userRepository.save(user);
+        return true;
     }
-    public void setEmail(String email, Long id){
+    public boolean setEmail(String email, Long id){
+        if (findByEmail(email) != null){
+            return false;
+        }
         User user = userRepository.findById(id).get();
         user.setEmail(email);
         userRepository.save(user);
+        return true;
     }
-    public void setTelephone(String telephone, Long id){
+    public boolean setTelephone(String telephone, Long id){
+        if (findByTelephone(telephone) != null){
+            return false;
+        }
         User user = userRepository.findById(id).get();
         user.setEmail(telephone);
         userRepository.save(user);
+        return true;
     }
     public void setPassword(String password, Long id){
         User user = userRepository.findById(id).get();

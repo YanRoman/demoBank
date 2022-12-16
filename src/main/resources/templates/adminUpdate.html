@@ -7,7 +7,7 @@
 </head>
 <body>
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+  <a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
     <span class="fs-4">Администрирование</span>
   </a>
@@ -19,9 +19,9 @@
 </header>
 
 <div class="container">
-<!--  <div class="row mb-3 text-center" th:if="${message}">
+  <div class="row mb-3 text-center" th:if="${message}">
     <div class="col-md-12 themed-grid-col" bis_skin_checked="1"><p style="color: red" th:text="${message}"></p></div>
-  </div>-->
+  </div>
 
   <form th:action="@{/admin/admChangeUsername/{id}(id=${user.id})}" method="post" class="row mb-3 text-left" bis_skin_checked="1">
     <div class="col-md-4 themed-grid-col" bis_skin_checked="1"><h4>Поменяйте имя пользователя</h4></div>
