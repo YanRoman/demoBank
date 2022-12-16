@@ -32,8 +32,21 @@
                 </div>
             </div>
             <div class="col-md-6" bis_skin_checked="1">
-                    <form th:action="@{/send}" method="post" class="h-100 p-5 bg-light border rounded-3" bis_skin_checked="1">
-                    </form>
+
+                <p style="color: red" th:if="${message}" th:text="${message}"></p>
+
+                <form th:action="@{/withdraw }" method="post" class="input-group mb-3">
+                    <input type="number" name="amount" class="form-control" placeholder="0.0" aria-label="0.0" aria-describedby="basic-addon2">
+                    <button type="submit" class="btn btn-outline-secondary">Снять</button>
+                </form>
+
+                <form th:action="@{/replenishment }" method="post" class="input-group mb-3">
+                    <input type="number" name="amount" class="form-control" placeholder="0.0" aria-label="0.0" aria-describedby="basic-addon2">
+                    <button type="submit" class="btn btn-outline-secondary">Пополнить</button>
+                </form>
+
+
+
             </div>
         </div>
     </div>
