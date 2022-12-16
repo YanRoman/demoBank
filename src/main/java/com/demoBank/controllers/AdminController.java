@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -121,5 +123,57 @@ public class AdminController {
         }
         userService.setPassword(password, userService.findByUsername(principal.getName()).getId());
         return "redirect:/admin";
+    }
+
+
+    @PostMapping("/findByUsername")
+    public String findByUsername(String username, Model model){
+
+        if (userService.findByUsername(username) == null){
+            model.addAttribute("message", "Не найдено");
+            model.addAttribute("users", userService.allUsers());
+            model.addAttribute("user", null);
+        } else{
+            model.addAttribute("user", userService.findByUsername(username));
+            model.addAttribute("users", userService.allUsers());
+        }
+        return "/admin";
+    }
+
+    @PostMapping("/findByEmail")
+    public String findByEmail(String email, Model model){
+        if (userService.findByEmail(email) == null){
+            model.addAttribute("message", "Не найдено");
+            model.addAttribute("users", userService.allUsers());
+            model.addAttribute("user", null);
+        } else{
+            model.addAttribute("user", userService.findByEmail(email));
+            model.addAttribute("users", userService.allUsers());
+        }
+        return "/admin";
+    }
+
+    @PostMapping("/findByIndebtedness")
+    public String findByIndebtedness(double amount, Principal principal, Model model){
+        System.out.println(amount);
+        List<User> users = userService.allUsers();
+        List<User> usersDebtors = new ArrayList<>();
+
+        for (User user : users){
+            if (user.getIndebtedness() >= amount){
+                usersDebtors.add(user);
+            }
+        }
+
+        if (usersDebtors.isEmpty()){
+            model.addAttribute("message", "Не найдено");
+            model.addAttribute("users", userService.allUsers());
+            model.addAttribute("user", null);
+        } else {
+            model.addAttribute("usersDebtors", usersDebtors);
+            model.addAttribute("users", userService.allUsers());
+            model.addAttribute("user", null);
+        }
+        return "/admin";
     }
 }

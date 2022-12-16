@@ -18,37 +18,140 @@
   </ul>
 </header>
 
-<div bis_skin_checked="1">
-  <div class="bd-example-snippet bd-code-snippet" bis_skin_checked="1"><div class="bd-example" bis_skin_checked="1">
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th scope="col">Номер</th>
-        <th scope="col">Имя пользователя</th>
-        <th scope="col">Почта</th>
-        <th scope="col">Телефон</th>
-        <th scope="col">Пароль</th>
-        <th scope="col">Задолжность</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-        <tbody th:each="user:${users}">
-          <tr>
-            <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
-            <th scope="row" th:utext="${user.username}">Default</th>
-            <td th:utext="${user.email}"></td>
-            <td th:utext="${user.telephone}"></td>
-            <td th:utext="${user.password}"></td>
-            <td th:utext="${user.indebtedness}"></td>
-            <td>
-              <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Удалить</a>
-              <a class="btn btn-danger" th:href="@{/admin/update/{id}(id=${user.id})}">Изменить</a>
-            </td>
-          </tr>
-        </tbody>
-    </table>
-  </div></div>
-</div>
 
+<main>
+  <div class="container py-4" bis_skin_checked="1">
+
+    <div class="p-5 mb-2 bg-light rounded-3" bis_skin_checked="1">
+
+      <form th:action="@{/admin/findByUsername }" method="post" class="input-group mb-3">
+        <input type="text" name="username" class="form-control" placeholder="Поиск по имени" aria-label="Поиск по имени" aria-describedby="basic-addon2">
+        <button type="submit" class="btn btn-outline-secondary">Найти</button>
+      </form>
+
+      <form th:action="@{/admin/findByEmail }" method="post" class="input-group mb-3">
+        <input type="text" name="email" class="form-control" placeholder="Поиск по email" aria-label="Поиск по email" aria-describedby="basic-addon2">
+        <button type="submit" class="btn btn-outline-secondary">Найти</button>
+      </form>
+
+      <form th:action="@{/admin/findByIndebtedness }" method="post" class="input-group mb-3">
+        <input type="number" name="amount" class="form-control" placeholder="Более 1000" aria-label="Более 1000" aria-describedby="basic-addon2">
+        <button type="submit" class="btn btn-outline-secondary">Найти</button>
+      </form>
+
+      <div th:if="${message}">
+        <h1 th:text="${message}" class="display-5 fw-bold">Custom jumbotron</h1>
+      </div>
+      <div th:if="${user}" class="container-fluid" bis_skin_checked="1">
+        <div class="p-5 mb-2 bg-light rounded-3" bis_skin_checked="1">
+          <div class="container-fluid py-5" bis_skin_checked="1">
+            <div bis_skin_checked="1">
+              <div class="bd-example-snippet bd-code-snippet" bis_skin_checked="1"><div class="bd-example" bis_skin_checked="1">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Имя пользователя</th>
+                    <th scope="col">Почта</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Задолжность</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
+                    <th scope="row" th:utext="${user.username}">Default</th>
+                    <td th:utext="${user.email}"></td>
+                    <td th:utext="${user.telephone}"></td>
+
+                    <td th:utext="${user.indebtedness}"></td>
+                    <td>
+                      <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Удалить</a>
+                      <a class="btn btn-danger" th:href="@{/admin/update/{id}(id=${user.id})}">Изменить</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${usersDebtors}" class="container-fluid" bis_skin_checked="1">
+        <div class="p-5 mb-2 bg-light rounded-3" bis_skin_checked="1">
+          <div class="container-fluid py-5" bis_skin_checked="1">
+            <div bis_skin_checked="1">
+              <div class="bd-example-snippet bd-code-snippet" bis_skin_checked="1"><div class="bd-example" bis_skin_checked="1">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Имя пользователя</th>
+                    <th scope="col">Почта</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Задолжность</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody th:each="user:${usersDebtors}">
+                  <tr>
+                    <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
+                    <th scope="row" th:utext="${user.username}">Default</th>
+                    <td th:utext="${user.email}"></td>
+                    <td th:utext="${user.telephone}"></td>
+                    <td th:utext="${user.indebtedness}"></td>
+                    <td>
+                      <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Удалить</a>
+                      <a class="btn btn-danger" th:href="@{/admin/update/{id}(id=${user.id})}">Изменить</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-4" bis_skin_checked="1">
+      <div class="p-5 mb-2 bg-light rounded-3" bis_skin_checked="1">
+        <div class="container-fluid py-5" bis_skin_checked="1">
+          <div bis_skin_checked="1">
+            <div class="bd-example-snippet bd-code-snippet" bis_skin_checked="1"><div class="bd-example" bis_skin_checked="1">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th scope="col">Номер</th>
+                  <th scope="col">Имя пользователя</th>
+                  <th scope="col">Почта</th>
+                  <th scope="col">Телефон</th>
+                  <th scope="col">Задолжность</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody th:each="user:${users}">
+                <tr>
+                  <th scope="row" th:utext="${user.id}" th:object="${id}">Default</th>
+                  <th scope="row" th:utext="${user.username}">Default</th>
+                  <td th:utext="${user.email}"></td>
+                  <td th:utext="${user.telephone}"></td>
+                  <td th:utext="${user.indebtedness}"></td>
+                  <td>
+                    <a class="btn btn-danger" th:href="@{/admin/delete/{id}(id=${user.id})}">Удалить</a>
+                    <a class="btn btn-danger" th:href="@{/admin/update/{id}(id=${user.id})}">Изменить</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 </body>
 </html>
