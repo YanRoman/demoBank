@@ -89,7 +89,7 @@ public class AdminController {
 
     @PostMapping("/admChangeEmail/{id}")
     public String admChangeEmail(@PathVariable Long id, String email, Model model, Principal principal){
-        if (!userService.setEmail(email, userService.findByUsername(principal.getName()).getId())){
+        if (!userService.setEmail(email, id)){
             model.addAttribute("user", userService.findByUsername(principal.getName()));
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "adminUpdate";
@@ -104,7 +104,7 @@ public class AdminController {
             model.addAttribute("message", "Неверный формат телефона");
             return "adminUpdate";
         }
-        if (!userService.setTelephone(telephone, userService.findByUsername(principal.getName()).getId())){
+        if (!userService.setTelephone(telephone, id)){
             model.addAttribute("user", userService.findByUsername(principal.getName()));
             model.addAttribute("message", "Пользователь с таким телефоном уже существует");
             return "adminUpdate";
@@ -121,11 +121,14 @@ public class AdminController {
             model.addAttribute("message", "Пароли не совпадают");
             return "adminUpdate";
         }
-        userService.setPassword(password, userService.findByUsername(principal.getName()).getId());
+        userService.setPassword(password, id);
         return "redirect:/admin";
     }
-
-
+    @PostMapping("/admChangeIndebtedness/{id}")
+    public String admChangeIndebtedness(@PathVariable Long id, double amount){
+        userService.setIndebtedness(amount, id);
+        return "redirect:/admin";
+    }
     @PostMapping("/findByUsername")
     public String findByUsername(String username, Model model){
 

@@ -79,13 +79,18 @@ public class UserService implements UserDetailsService {
             return false;
         }
         User user = userRepository.findById(id).get();
-        user.setEmail(telephone);
+        user.setTelephone(telephone);
         userRepository.save(user);
         return true;
     }
     public void setPassword(String password, Long id){
         User user = userRepository.findById(id).get();
         user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+    public void setIndebtedness(double amount, Long id){
+        User user = userRepository.findById(id).get();
+        user.setIndebtedness(amount);
         userRepository.save(user);
     }
     public boolean addCard(Principal principal){
