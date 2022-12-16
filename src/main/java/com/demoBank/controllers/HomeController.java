@@ -26,6 +26,8 @@ public class HomeController {
     }
     @GetMapping("/")
     public String home(Principal principal, Model model) throws Exception {
+        model.addAttribute("indebtedness",
+                userService.findByUsername(principal.getName()).getIndebtedness());
         model.addAttribute("name", principal.getName());
         model.addAttribute("time", getTime());
 
@@ -35,6 +37,24 @@ public class HomeController {
         }
 
         return "home";
+    }
+    @GetMapping("/deleteCard")
+    public String deleteCard(Principal principal, Model model) throws Exception {
+        if (userService.findByUsername(principal.getName()).getIndebtedness() > 0){
+            model.addAttribute("indebtedness",
+                    userService.findByUsername(principal.getName()).getIndebtedness());
+            model.addAttribute("name", principal.getName());
+            model.addAttribute("time", getTime());
+            model.addAttribute("messageDeleteCard",
+                    "У вас имеется задолжность, погасите ее чтобы удалить карту");
+            if (userService.findByUsername(principal.getName()).getCard() != null){
+                model.addAttribute("card", getUserCard(principal));
+                model.addAttribute("date", getCardDate(principal));
+            }
+            return "home";
+        }
+        userService.deleteCard(principal);
+        return "redirect:/";
     }
     private Card getUserCard(Principal principal){
         return userService.findByUsername(principal.getName()).getCard();
@@ -57,6 +77,8 @@ public class HomeController {
 
         System.out.println(amount);
         if (amount > card.getBalance()){
+            model.addAttribute("indebtedness",
+                    userService.findByUsername(principal.getName()).getIndebtedness());
             model.addAttribute("name", principal.getName());
             model.addAttribute("time", getTime());
             model.addAttribute("message", "Недостаточно средств :(");
@@ -83,6 +105,8 @@ public class HomeController {
         Card card = user.getCard();
 
         if (amount < 0){
+            model.addAttribute("indebtedness",
+                    userService.findByUsername(principal.getName()).getIndebtedness());
             model.addAttribute("name", principal.getName());
             model.addAttribute("time", getTime());
             model.addAttribute("message", "Некоректный ввод данных :(");

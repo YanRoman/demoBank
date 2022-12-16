@@ -1,6 +1,7 @@
 package com.demoBank.controllers;
 
 import com.demoBank.entities.Card;
+import com.demoBank.entities.User;
 import com.demoBank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +29,7 @@ public class CardController {
         return "redirect:/";
     }
 
-    @GetMapping("/deleteCard")
-    public String deleteCard(Principal principal){
-        userService.deleteCard(principal);
-        return "redirect:/";
-    }
+
 
     @PostMapping("/send")
     public String send(@ModelAttribute("sum") String sum,
