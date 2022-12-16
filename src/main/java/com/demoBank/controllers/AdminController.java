@@ -50,6 +50,10 @@ public class AdminController {
             model.addAttribute("message", "Пользователь с таким email уже существует");
             return "addUser";
         }
+        if (userService.findByTelephone(user.getTelephone()) != null){
+            model.addAttribute("message", "Пользователь с таким телефоном уже существует");
+            return "auth/registration";
+        }
         if (!userService.saveUser(user)){
             model.addAttribute("message", "Пользователь с таким именем уже существует");
             return "auth/registration";

@@ -46,7 +46,7 @@ public class HomeController {
             model.addAttribute("name", principal.getName());
             model.addAttribute("time", getTime());
             model.addAttribute("messageDeleteCard",
-                    "У вас имеется задолжность, погасите ее чтобы удалить карту");
+                    "У вас имеется задолженность, погасите ее чтобы удалить карту");
             if (userService.findByUsername(principal.getName()).getCard() != null){
                 model.addAttribute("card", getUserCard(principal));
                 model.addAttribute("date", getCardDate(principal));
